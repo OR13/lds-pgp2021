@@ -84,7 +84,7 @@ export class PgpSignature2021 {
     return Buffer.concat([sha256(c14nProofOptions), sha256(c14nDocument)]);
   }
 
-  async matchProof({
+  public async matchProof({
     proof,
   }: // document,
   // purpose,
@@ -94,12 +94,12 @@ export class PgpSignature2021 {
     return proof.type === 'sec:PgpSignature2021';
   }
 
-  async updateProof({ proof }: any) {
+  public async updateProof({ proof }: any) {
     // extending classes may do more
     return proof;
   }
 
-  async sign({ verifyData, proof }: any) {
+  public async sign({ verifyData, proof }: any) {
     if (!(this.signer && typeof this.signer.sign === 'function')) {
       throw new Error('A signer API has not been specified.');
     }
@@ -108,7 +108,7 @@ export class PgpSignature2021 {
     return proof;
   }
 
-  async createProof({
+  public async createProof({
     document,
     purpose,
     documentLoader,
@@ -196,7 +196,7 @@ export class PgpSignature2021 {
     return proof;
   }
 
-  async getVerificationMethod({ proof, documentLoader }: any) {
+  public async getVerificationMethod({ proof, documentLoader }: any) {
     let { verificationMethod } = proof;
 
     if (!verificationMethod) {

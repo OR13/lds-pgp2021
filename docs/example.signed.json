@@ -1,0 +1,22 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://w3id.org/pgp/v1"
+  ],
+  "id": "http://example.gov/credentials/3732",
+  "type": ["VerifiableCredential"],
+  "issuer": {
+    "id": "did:example:123"
+  },
+  "issuanceDate": "2020-03-10T04:24:12.164Z",
+  "credentialSubject": {
+    "id": "did:example:456"
+  },
+  "proof": {
+    "type": "PgpSignature2021",
+    "created": "2021-01-17T23:48:29.287Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "-----BEGIN PGP SIGNATURE-----\n\niQEzBAABCAAdFiEET9QBfWGI/5tPBymeAv7M1jBvKZwFAmAEzM0ACgkQAv7M1jBv\nKZy+vwf+Pb6oM5kUDxf+kPof2FIHh9AW8UCIUkZrn8DsJuXb+xSzuQlX7Mf0w3kF\nUzAz5BeMizoDdUYRj8GAfu4P8WD9JbrvDg0mkFHWfI2vg/Nro+TE5p6GH1Kx0yjv\noYn2A9+8iUc1jeD49DP2AU+GxAAHyOBWSwOpAY4vVtaFZ0pYzREK65XGSBhZeuE6\n2KDgWUaBqldadZjJYSFHy0qsQlz09XiFI+aGkGbjN77iHA07KqbzGGaE7GAtfrki\nP+j4TRBpQwHE75CqqeqZciIT7SAKlkfGsdXRM6BNjoEi1E197TiWqlP6y/91cyfO\nCrOYlpKhu4Z2XmX3Sq3ESFHn0/L7Ng==\n=Md0O\n-----END PGP SIGNATURE-----\n",
+    "verificationMethod": "did:web:or13.github.io:deno-did-pm#4FD4017D6188FF9B4F07299E02FECCD6306F299C"
+  }
+}

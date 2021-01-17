@@ -96,12 +96,11 @@ export class PgpKeyPair2021 {
   public signer() {
     let privateKey = this.privateKey;
 
-    if (!privateKey) {
-      throw new Error('No private key to sign with.');
-    }
-
     return {
       async sign({ data }: any) {
+        if (!privateKey) {
+          throw new Error('No private key to sign with.');
+        }
         const { signature: detachedSignature } = await openpgp.sign({
           message: openpgp.message.fromBinary(Buffer.from(data)),
           privateKeys: [privateKey],
@@ -112,14 +111,14 @@ export class PgpKeyPair2021 {
     };
   }
 
-  verifier() {
+  public verifier() {
     let publicKey = this.publicKey;
-    if (!publicKey) {
-      throw new Error('No public key to verify with.');
-    }
 
     return {
       async verify({ data, signature }: any) {
+        if (!publicKey) {
+          throw new Error('No public key to verify with.');
+        }
         const { signatures } = await openpgp.verify({
           message: openpgp.message.fromBinary(Buffer.from(data)),
           signature: await openpgp.signature.readArmored(signature), // parse detached signature

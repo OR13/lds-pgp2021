@@ -8,12 +8,17 @@
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "bin"
   ],
   "engines": {
     "node": ">=10"
   },
+  "bin": {
+    "pgp2021": "./bin/cli.js"
+  },
   "scripts": {
+    "pgp2021": "node ./bin/cli.js",
     "start": "tsdx watch",
     "build": "tsdx build",
     "pretest": "export TS_JEST_DISABLE_VER_CHECKER=true",
@@ -56,8 +61,13 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@transmute/jsonld-document-loader": "^0.2.0",
+    "@transmute/linked-data-proof": "^0.2.1-unstable.0",
     "jsonld": "^3.2.0",
+    "jsonld-signatures": "^6.0.0",
+    "node-fetch": "^2.6.1",
     "openpgp": "^4.10.9",
-    "security-context": "^4.0.0"
+    "security-context": "^4.0.0",
+    "vorpal": "^1.12.0"
   }
 }
