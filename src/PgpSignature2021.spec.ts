@@ -47,6 +47,7 @@ it('can issue', async () => {
       return res;
     },
   });
+  // console.log(JSON.stringify(verifiableCredential, null, 2));
   expect(verifiableCredential.proof.type).toEqual('PgpSignature2021');
 });
 

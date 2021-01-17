@@ -37,14 +37,36 @@
         // previousMaturity:  "WD",
 
         // extend the bibliography entries
-        localBiblio: [],
+        localBiblio: {
+          'RDF-DATASET-NORMALIZATION': {
+            title: 'RDF Dataset Normalization 1.0',
+            href: 'http://json-ld.github.io/normalization/spec/',
+            authors: ['David Longley', 'Manu Sporny'],
+            status: 'CGDRAFT',
+            publisher: 'JSON-LD Community Group',
+          },
+          'SHA-3': {
+            title:
+              'SHA-3 Standard: Permutation-Based Has and Extendable-Output Functions',
+            href: 'https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf',
+            status: 'Published',
+            publisher: 'NIST',
+          },
+          'LD-PROOFS': {
+            title: 'Linked Data Proofs 1.0',
+            href: 'https://w3c-ccg.github.io/ld-proofs',
+            authors: ['David Longley', 'Manu Sporny'],
+            status: 'CGDRAFT',
+            publisher: 'Web Payments Community Group',
+          },
+        },
         doJsonLd: true,
 
         github: 'https://github.com/OR13/lds-pgp2021',
         includePermalinks: false,
 
         // if there a publicly available Editor's Draft, this is the link
-        edDraftURI: 'http://or13.github.io/lds-pgp2021/',
+        edDraftURI: 'https://or13.github.io/lds-pgp2021/',
 
         // if this is a LCWD, uncomment and set the end of its review period
         // lcEnd: "2009-08-05",
@@ -65,10 +87,7 @@
         // only "name" is required. Same format as editors.
         authors: [],
         // name of the WG
-        wg: 'Credentials Community Group',
-
-        // URI of the public WG page
-        wgURI: 'https://www.w3.org/community/credentials/',
+        group: 'credentials',
 
         // name (with the @w3c.org) of the public mailing to which comments are due
         wgPublicList: 'public-credentials',
@@ -96,6 +115,9 @@
         font-weight: bold;
         text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
       }
+      .simple {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -108,8 +130,280 @@
 
     <section id="sotd"></section>
 
+    <section>
+      <h2>Terminology</h2>
+      <p>
+        The following terms are used to describe concepts involved in the
+        generation and verification of the Linked Data Proof
+        <a>signature suite</a>.
+      </p>
+
+      <p class="note">
+        Please review [[LD-PROOFS]] for more details regarding linked data proof
+        suites.
+      </p>
+
+      <dl>
+        <dt><dfn>canonical form</dfn></dt>
+        <dd>
+          The output of applying a <a>canonicalization algorithm</a> to an input
+          document.
+        </dd>
+        <dt><dfn>canonicalization algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input document that has more than one
+          possible representation and always transforms it into a
+          <a>canonical form</a>. This process is sometimes also called
+          normalization.
+        </dd>
+        <dt>
+          <dfn>digest algorithm</dfn>
+        </dt>
+        <dd>
+          An algorithm that takes a input message and produces a cryptographic
+          output message that is often many orders of magnitude smaller than the
+          input message. These algorithms are often 1) very fast, 2)
+          non-reversible, 3) cause the output to change significantly when even
+          one bit of the input message changes, and 4) make it infeasible to
+          find two different inputs for the same output.
+        </dd>
+        <dt><dfn>signature algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input message and produces an output value
+          where the receiver of the message can mathematically verify that the
+          message has not been modified in transit and came from someone
+          possessing a particular secret.
+        </dd>
+        <dt><dfn>signature suite</dfn></dt>
+        <dd>
+          A specified set of cryptographic primitives typically consisting of a
+          canonicalization algorithm, a message digest algorithm, and a
+          signature algorithm that are bundled together by cryptographers for
+          developers for the purposes of safety and convenience.
+        </dd>
+      </dl>
+    </section>
+
+    <section class="normative">
+      <h2>The PGP Vocabulary</h2>
+
+      <p>
+        The PGP Vocabulary is available via:
+      </p>
+
+      <pre class="example">
+        {
+          "@context": ["https://w3id.org/pgp/v1"]
+        }
+      </pre>
+
+      <p>
+        The following classes are available for specifying information related
+        to PGP.
+      </p>
+
+      <section class="normative">
+        <h3 id="publicKeyPgp">publicKeyPgp</h3>
+
+        <p>
+          An ascii armored public PGP key.
+        </p>
+
+        <table class="simple">
+          <tbody>
+            <tr>
+              <td>
+                Term
+              </td>
+              <td>
+                publicKeyPgp
+              </td>
+            </tr>
+            <tr>
+              <td>
+                URL
+              </td>
+              <td>
+                <a href="https://w3id.org/security#publicKeyPgp"
+                  >https://w3id.org/security#publicKeyPgp</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Expected Value
+              </td>
+              <td>
+                Ascii armored public PGP Key
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="normative">
+        <h3 id="privateKeyPgp">privateKeyPgp</h3>
+
+        <p>
+          An ascii armored private PGP key.
+        </p>
+
+        <table class="simple">
+          <tbody>
+            <tr>
+              <td>
+                Term
+              </td>
+              <td>
+                privateKeyPgp
+              </td>
+            </tr>
+            <tr>
+              <td>
+                URL
+              </td>
+              <td>
+                <a href="https://w3id.org/security#privateKeyPgp"
+                  >https://w3id.org/security#privateKeyPgp</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Expected Value
+              </td>
+              <td>
+                Ascii armored private PGP Key
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="normative">
+        <h3 id="PgpVerificationKey2021">PgpVerificationKey2021</h3>
+
+        <p>
+          A verificationMethod type for PGP.
+        </p>
+
+        <table class="simple">
+          <tbody>
+            <tr>
+              <td>
+                Term
+              </td>
+              <td>
+                PgpVerificationKey2021
+              </td>
+            </tr>
+            <tr>
+              <td>
+                URL
+              </td>
+              <td>
+                <a href="https://w3id.org/security#PgpVerificationKey2021"
+                  >https://w3id.org/security#PgpVerificationKey2021</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Expected Value
+              </td>
+              <td>
+                Class
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="normative">
+        <h3 id="PgpSignature2021">PgpSignature2021</h3>
+
+        <p>
+          A linked data proof type for PGP.
+        </p>
+
+        <table class="simple">
+          <tbody>
+            <tr>
+              <td>
+                Term
+              </td>
+              <td>
+                PgpSignature2021
+              </td>
+            </tr>
+            <tr>
+              <td>
+                URL
+              </td>
+              <td>
+                <a href="https://w3id.org/security#PgpSignature2021"
+                  >https://w3id.org/security#PgpSignature2021</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Expected Value
+              </td>
+              <td>
+                Class
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <section class="normative">
+      <h2>Linked Data Suite Definition</h2>
+      <p>
+        The PGP vocabulary defined in this document may be used to construct
+        linked data proofs.
+      </p>
+
+      <table class="simple">
+        <thead>
+          <th>Parameter</th>
+          <th>Value</th>
+          <th>Specification</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a>canonicalization algorithm</a></td>
+            <td>https://w3id.org/security#URDNA2015</td>
+            <td>[[RDF-DATASET-NORMALIZATION]]</td>
+          </tr>
+          <tr>
+            <td><a>digest algorithm</a></td>
+            <td>SHA-256</td>
+            <td>[[SHA-3]]</td>
+          </tr>
+          <tr>
+            <td><a>signature algorithm</a></td>
+            <td>PGP Detached Signatures</td>
+            <td>
+              [[RFC4880]]
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <pre class="example">
+        {
+          "id": "https:/w3id.org/security#PgpSignature2021",
+          "type": "SignatureSuite",
+          "canonicalizationAlgorithm": "https://w3id.org/security#URDNA2015",
+          "digestAlgorithm": "https://tools.ietf.org/html/rfc5754#section-2.2",
+          "signatureAlgorithm": "https://tools.ietf.org/html/rfc4880#section-11.4"
+        }
+      </pre>
+    </section>
+
     <section class="informative">
-      <h2>Introduction</h2>
+      <h2>Examples</h2>
 
       <p>
         This specification describes a Linked Data vocabulary for asserting
@@ -117,14 +411,36 @@
       </p>
 
       <section class="informative">
-        <h3>Example</h3>
+        <h3>DID Document</h3>
 
         <p>
-          The following example is provided as a simple example of when this
-          vocabulary is useful:
+          The PGP vocabulary can be used with decentralized identifiers.
         </p>
 
-        <pre class="example">
+        <pre class="example" title="Example DID Document">
+{
+  "@context": ["https://www.w3.org/ns/did/v1", "https://w3id.org/pgp/v1"],
+  "id": "did:example:123",
+  "assertionMethod": [
+    {
+      "id": "did:example:123#test-id",
+      "type": "PgpVerificationKey2021",
+      "controller": "did:example:123",
+      "publicKeyPgp": "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\nVersion: OpenPGP.js v4.10.9\r\nComment: https://openpgpjs.org\r\n\r\nxjMEYASIXxYJKwYBBAHaRw8BAQdAiEDH3eDo954hWbnf5srnHwL6WfTKXEwu\r\noeGIK39k7DPNG0pvbiBTbWl0aCA8am9uQGV4YW1wbGUuY29tPsKPBBAWCgAg\r\nBQJgBIhfBgsJBwgDAgQVCAoCBBYCAQACGQECGwMCHgEAIQkQNzyO0OYKPDsW\r\nIQSPfkGb1dh1xq44qq03PI7Q5go8Ox6tAQDWfWPrPn2dCNU4pWmn7WtZZBpr\r\nsTkZ+B91uV7Rc1YtAwEA6mBHjiudCfx5qjnPdfpg/Q7+AoVyoN32YOKitFQR\r\n0gfOOARgBIhfEgorBgEEAZdVAQUBAQdAs9lCd2o023BMxfLWFDNr+7vtZ1PV\r\nVEUbSSK1GvkEFikDAQgHwngEGBYIAAkFAmAEiF8CGwwAIQkQNzyO0OYKPDsW\r\nIQSPfkGb1dh1xq44qq03PI7Q5go8O/+XAP9MqQ6E8zHJD+JdKhCqOOol11lB\r\nenlTbeZqHllv7xdGpAD/dOElSqr+Eslk0squxsIaglX39oh2wGcmMQrqvlbT\r\nKAA=\r\n=DVI0\r\n-----END PGP PUBLIC KEY BLOCK-----\r\n"
+    }
+  ]
+}           
+</pre
+        >
+      </section>
+      <section class="informative">
+        <h3>Verifiable Credential</h3>
+
+        <p>
+          The PGP vocabulary can be used with verifiable credentials.
+        </p>
+
+        <pre class="example" title="Example Verifiable Credential">
 {
     "@context": [
         "https://www.w3.org/2018/credentials/v1",
@@ -148,57 +464,6 @@
     }
 }    
         </pre>
-      </section>
-    </section>
-
-    <section class="informative">
-      <h2>Terminology</h2>
-    </section>
-
-    <section class="normative">
-      <h2>The PGP Vocabulary</h2>
-
-      <p>
-        This vocabulary assumes all terms specified in the base Verifiable
-        Credentials [[VC-DATA-MODEL]] context. In addition, the following
-        classes are available for specifying information related to PGP.
-      </p>
-
-      <section class="normative">
-        <h3>publicKeyPgp</h3>
-
-        <p>
-          An ascii armored public PGP key.
-        </p>
-
-        <table class="simple">
-          <tbody>
-            <tr>
-              <td>
-                Term
-              </td>
-              <td>
-                publicKeyPgp
-              </td>
-            </tr>
-            <tr>
-              <td>
-                URL
-              </td>
-              <td>
-                https://w3id.org/security#publicKeyPgp
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Expected Value
-              </td>
-              <td>
-                Ascii armored Public PGP Key
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </section>
     </section>
 
