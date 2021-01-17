@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PGP Vocabulary v1</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <script
+      src="https://www.w3.org/Tools/respec/respec-w3c"
+      class="remove"
+    ></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g., WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus: 'unofficial',
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: 'pgp-vocab',
+
+        // subtitle for the spec
+        subtitle:
+          'A Linked Data vocabulary for expressing attributes related to PGP.',
+
+        // if you wish the publication date to be other than today, set this
+        //publishDate: "2019-03-26",
+        //crEnd: "2019-04-23",
+        //implementationReportURI: "https://w3c.github.io/",
+        previousMaturity: 'UNOFFICIAL',
+        previousPublishDate: '2021-01-27',
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // extend the bibliography entries
+        localBiblio: [],
+        doJsonLd: true,
+
+        github: 'https://github.com/OR13/lds-pgp2021',
+        includePermalinks: false,
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: 'http://or13.github.io/lds-pgp2021/',
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors: [
+          {
+            name: 'Orie Steele',
+            url: 'https://www.linkedin.com/in/or13b/',
+            company: 'Transmute',
+            companyURL: 'https://www.transmute.industries/',
+            w3cid: 109171,
+          },
+        ],
+        // authors, add as many as you like.
+        // This is optional, uncomment if you have authors as well as editors.
+        // only "name" is required. Same format as editors.
+        authors: [],
+        // name of the WG
+        wg: 'Credentials Community Group',
+
+        // URI of the public WG page
+        wgURI: 'https://www.w3.org/community/credentials/',
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: 'public-credentials',
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighborhood
+        // Team Contact.
+        //wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/98922/status",
+        maxTocLevel: 2,
+        inlineCSS: true,
+      };
+    </script>
+    <style>
+      pre .highlight {
+        font-weight: bold;
+        color: green;
+      }
+      pre .comment {
+        font-weight: bold;
+        color: Gray;
+      }
+      .color-text {
+        font-weight: bold;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        This specification describes a Linked Data vocabulary for asserting
+        Verifiable Credentials related to PGP.
+      </p>
+    </section>
+
+    <section id="sotd"></section>
+
+    <section class="informative">
+      <h2>Introduction</h2>
+
+      <p>
+        This specification describes a Linked Data vocabulary for asserting
+        Verifiable Credentials related to PGP.
+      </p>
+
+      <section class="informative">
+        <h3>Example</h3>
+
+        <p>
+          The following example is provided as a simple example of when this
+          vocabulary is useful:
+        </p>
+
+        <pre class="example">
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/pgp/v1"
+    ],
+    "id": "http://example.gov/credentials/3732",
+    "type": ["VerifiableCredential"],
+    "issuer": {
+        "id": "did:example:123"
+    },
+    "issuanceDate": "2020-03-10T04:24:12.164Z",
+    "credentialSubject": {
+        "id": "did:example:456"
+    },
+    "proof": {
+        "type": "PgpSignature2021",
+        "created": "2019-12-11T03:50:55Z",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v4.10.9\r\nComment: https://openpgpjs.org\r\n\r\nwnUEABYKAAYFAmAEmXwAIQkQNzyO0OYKPDsWIQSPfkGb1dh1xq44qq03PI7Q\r\n5go8O2UlAQDfPySvUIsTjXHYW+BmIipUC204GP+i014oBRwkp3mcvQD9HDFx\r\nm8P8aO6TCDtembKj/Bca7u3/99CNQjtQwkvOvAo=\r\n=QZTK\r\n-----END PGP SIGNATURE-----\r\n",
+        "verificationMethod": "did:example:123#test-id"
+    }
+}    
+        </pre>
+      </section>
+    </section>
+
+    <section class="informative">
+      <h2>Terminology</h2>
+    </section>
+
+    <section class="normative">
+      <h2>The PGP Vocabulary</h2>
+
+      <p>
+        This vocabulary assumes all terms specified in the base Verifiable
+        Credentials [[VC-DATA-MODEL]] context. In addition, the following
+        classes are available for specifying information related to PGP.
+      </p>
+
+      <section class="normative">
+        <h3>publicKeyPgp</h3>
+
+        <p>
+          An ascii armored public PGP key.
+        </p>
+
+        <table class="simple">
+          <tbody>
+            <tr>
+              <td>
+                Term
+              </td>
+              <td>
+                publicKeyPgp
+              </td>
+            </tr>
+            <tr>
+              <td>
+                URL
+              </td>
+              <td>
+                https://w3id.org/security#publicKeyPgp
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Expected Value
+              </td>
+              <td>
+                Ascii armored Public PGP Key
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <section class="informative">
+      <h2>Privacy Considerations</h2>
+
+      <p class="issue">
+        There needs to be a list.
+      </p>
+    </section>
+
+    <section class="informative">
+      <h2>Security Considerations</h2>
+
+      <p class="issue">
+        There needs to be a list.
+      </p>
+    </section>
+  </body>
+</html>
