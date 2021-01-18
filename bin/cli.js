@@ -6,14 +6,9 @@ const vorpal = require('vorpal')();
 const { documentLoader } = require('./documentLoader');
 const { PgpKeyPair2021, PgpSignature2021 } = require('../dist');
 const { sign } = require('@transmute/linked-data-proof');
-const jsigs = require('jsonld-signatures');
-const { AssertionProofPurpose } = jsigs.purposes;
-
+const { ld } = require('@transmute/vc.js');
+const { AssertionProofPurpose } = ld;
 const { version } = require('../package.json');
-
-// const { documentLoader } = require('../src/__tests__/__fixtures__');
-
-// const { GpgSignature2020, GpgLinkedDataKeyClass2020 } = require('../src');
 
 vorpal.wait = seconds =>
   new Promise(resolve => {
@@ -25,7 +20,7 @@ vorpal.command('version', 'display version').action(async () => {
   console.log(
     JSON.stringify(
       {
-        '@transmute/lds-gpg2020': version,
+        'lds-pgp2021': version,
       },
       null,
       2
